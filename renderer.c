@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "renderer.h"
 #include "input.h"
-#include <SDL2/SDL_opengl.h>
+#include "mysdl.h"
 #include <GL/glu.h>
 
 // take out render scaling stuff (simpler just to have 1:1 scale)
@@ -43,7 +43,7 @@ void loadTexture() {
     GLuint TextureID = 0;
     int Mode = GL_RGB;
      
-    SDL_Surface* Surface = IMG_Load("data/grass2.jpg");
+    SDL_Surface* Surface = SDL_LoadBMP("data/sky.bmp");
 
     glGenTextures(1, &TextureID);
     glBindTexture(GL_TEXTURE_2D, TextureID);
@@ -110,7 +110,7 @@ void updateCanvas(void) {
     GLfloat ztrans = -zpos;                    // Used For Player Translation On The Z Axis
     glTranslatef(xtrans, 0, ztrans);           // Translate The Scene Based On Player Position
 
-    float i = -10.1;
+    float i = -10.1f;
 
     // glTranslatef(0, 0, i);            // translate to quad origin.
     // glRotatef(blurg++, 0, 1, 0);             // perform desired rotation.

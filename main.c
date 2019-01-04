@@ -14,14 +14,6 @@ bool running = true;
 SDL_Window *window = NULL;
 
 static void initSDL(void) {
-    if(!IMG_Init(IMG_INIT_PNG)) 
-        fatalError("Fatal error", "SDL_Image did not initialise.");
-
-    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 64) < 0)
-        fatalError("Fatal error", "SDL_Mixer did not initialise.");
-
-    Mix_AllocateChannels(4);
-
     SDL_InitSubSystem(SDL_INIT_VIDEO);
 }
 
@@ -77,7 +69,6 @@ static void shutdownMain(void) {
         }
 
         //Renderer frame
-        double renderFPS;
         if(timer(&lastRenderFrameTime, RENDER_HZ)) {
             updateCanvas();
         }
