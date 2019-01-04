@@ -13,8 +13,6 @@ const int GAME_HZ = 1000 / 60;			//60fps
 bool running = true;
 SDL_Window *window = NULL;
 
-Coord windowSize = { 800, 600 };
-
 static void initSDL(void) {
     if(!IMG_Init(IMG_INIT_PNG)) 
         fatalError("Fatal error", "SDL_Image did not initialise.");
@@ -32,8 +30,8 @@ static void initWindow(void) {
         "test",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        (int)windowSize.x,					//dimensions
-        (int)windowSize.y,
+        WIDTH,
+        HEIGHT,
         SDL_WINDOW_OPENGL
     );
 
@@ -60,9 +58,6 @@ static void shutdownMain(void) {
 #else
     int main()  {
 #endif
-    //Seed randomMq number generator
-    srand(time(NULL));
-
     atexit(shutdownMain);
 
     initSDL();

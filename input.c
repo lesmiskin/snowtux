@@ -65,5 +65,5 @@ void pollInput(void) {
 }
 
 void processSystemCommands(void) {
-    if(checkCommand(CMD_QUIT)) quit();
+    if(checkCommand(CMD_QUIT)) running = false;
 }

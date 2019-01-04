@@ -1,8 +1,8 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <SDL2/SDL_opengl.h>
 #include "common.h"
+#include "mysdl.h"
 
 extern float piover180;
 extern float heading;
