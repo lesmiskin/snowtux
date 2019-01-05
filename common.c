@@ -1,34 +1,27 @@
 #include "common.h"
-#include <time.h>
+#include <time.h>		// needed for "clock()"
 
-long ticsToMilliseconds(long tics) {
-    //we want the duration version of the platform-independent seconds, so we / 1000.
-    long platformAgnosticMilliseconds = CLOCKS_PER_SEC / 1000;
+long getProgramTime_ms() {
+	// get the amount of time the program has been running for, in "ticks" (special units of time used by computers)
+	long time_ticks = clock();
 
-    return tics / platformAgnosticMilliseconds;
+	// do a calculation to check how many ticks are in a millisecond, as this can change between types of computers
+	long ticksPerMillisecond = CLOCKS_PER_SEC / 1000;
+
+	// convert the ticks to milliseconds, now that we have the correct units to do so
+	long time_ms = time_ticks / ticksPerMillisecond;
+
+	return time_ms;
 }
 
-bool isDue(long now, long lastTime, double hertz) {
-    long timeSinceLast = ticsToMilliseconds(now - lastTime);
-    return timeSinceLast >= hertz;
-}
+bool checkIfDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms) {
+	long time_ms = getProgramTime_ms();
 
-bool timer(long *lastTime, double hertz){
-    long now = clock();
-    if(isDue(now, *lastTime, hertz)) {
-        *lastTime = now;
-        return true;
-    }else{
-        return false;
-    }
-}
+	// figure out the amount of time it's been since the last operation happened
+	long timeSinceLastOperation_ms = time_ms - timeOfLastOperation_ms;
 
-void fatalError(const char *title, const char *message) {
-    SDL_ShowSimpleMessageBox(
-        SDL_MESSAGEBOX_ERROR,
-        title,
-        message,
-        window
-    );
-    SDL_Quit();
+	// if enough time has elapsed since the last operation, then we want to do the next operation
+	bool isDue = timeSinceLastOperation_ms >= timeUntilNextOperation_ms;
+
+	return isDue;
 }

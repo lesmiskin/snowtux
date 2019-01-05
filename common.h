@@ -2,6 +2,12 @@
 #define COMMON_H
 
 #include <stdbool.h>
+
+long getProgramTime_ms();
+bool checkIfDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
+
+
+
 #include "mysdl.h"
 
 #define WIDTH 640
@@ -15,8 +21,5 @@ typedef struct {
     float y;
     float z;
 } Coord;
-
-extern bool timer(long *lastTime, double hertz);
-extern void fatalError(const char *title, const char *message);
 
 #endif
