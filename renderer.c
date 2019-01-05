@@ -43,7 +43,7 @@ void loadTexture() {
     GLuint TextureID = 0;
     int Mode = GL_RGB;
      
-    SDL_Surface* Surface = SDL_LoadBMP("data/sky.bmp");
+    SDL_Surface* Surface = SDL_LoadBMP("data/grass.bmp");
 
     glGenTextures(1, &TextureID);
     glBindTexture(GL_TEXTURE_2D, TextureID);
