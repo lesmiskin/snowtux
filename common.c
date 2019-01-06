@@ -1,7 +1,7 @@
 #include "common.h"
-#include <time.h>				// needed for "clock()"
+#include <time.h>               // needed for "clock()"
 
-bool stopTheGame = false;		// stored in COMMON.C so we can toggle from anywhere in our code
+bool stopTheGame = false;       // stored in COMMON.C so we can toggle from anywhere in our code
 
 long getProgramTime_ms() {
 	// get the amount of time the program has been running for, in "ticks" (special units of time used by computers)

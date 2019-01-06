@@ -33,6 +33,7 @@ void checkForKeyPresses(void) {
 			case SDL_QUIT:
 				stopTheGame = true;
 				break;
+
 			//Presses
 			case SDL_KEYDOWN: {
 				//Ignore held keys.

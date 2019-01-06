@@ -1,6 +1,11 @@
-// TODO: Use spaces not tabs
+// CODE QUALITY:
+// common.c ....: 10/10 [DONE]
+// main.c ......: 10/10 [DONE]
+// graphics.c ..: 0/10
+// input.c .....: 0/10
 
-// GRADE: 10/10
+// TODO: see how complex latest opengl api is (more responsible for future devs)
+// TODO: new "controls.c" file (does math for turning, exported from INPUT.C)
 
 #include "common.h"             // to access the "stopTheGame" variable
 #include "graphics.h"           // to show graphics onscreen
