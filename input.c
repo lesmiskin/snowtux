@@ -2,12 +2,13 @@
 
 #include "common.h"
 #include "input.h"
+#include <SDL_opengl.h>
 
 float piover180 = 0.0174532925f;
-float heading;
-float xpos;
-GLfloat yrot;
-GLfloat zpos;
+float heading = 0;
+float xpos = 0;
+GLfloat yrot = 0;
+GLfloat zpos = 0;
 
 #define MAX_COMMANDS 20
 
@@ -17,7 +18,7 @@ bool checkCommand(int commandFlag) {
     return commands[commandFlag];
 }
 
-void pollInput(void) {
+void checkForKeyPresses(void) {
     SDL_PumpEvents();
     const Uint8 *keysHeld = SDL_GetKeyboardState(NULL);
 
@@ -28,8 +29,9 @@ void pollInput(void) {
     SDL_Event event;
     while(SDL_PollEvent(&event) != 0) {
 		switch (event.type) {
+			// when the user tries to close the program in the normal fashion (e.g. clicks the "X" button)
 			case SDL_QUIT:
-				commands[CMD_QUIT] = true;
+				stopTheGame = true;
 				break;
 			//Presses
 			case SDL_KEYDOWN: {
@@ -38,9 +40,12 @@ void pollInput(void) {
 
 				SDL_Keycode keypress = event.key.keysym.scancode;
 
-				//Exit to title.
-				if (keypress == SDL_SCANCODE_ESCAPE)
-					commands[CMD_QUIT] = true;
+				// TODO: respond to command key presses here
+
+				// if the user presses the ESCAPE key, then we should also quit the game
+				if (keypress == SDL_SCANCODE_ESCAPE) {
+					stopTheGame = true;
+				}
 			}
 		}
 	}
@@ -62,8 +67,4 @@ void pollInput(void) {
 	    xpos += (float)sin(yrot*piover180) * 0.15f;          // Move On The X-Plane Based On Player Direction
 	    zpos += (float)cos(yrot*piover180) * 0.15f;          // Move On The Z-Plane Based On Player Direction
 	}
-}
-
-void processSystemCommands(void) {
-    if(checkCommand(CMD_QUIT)) running = false;
 }

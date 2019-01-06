@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include "common.h"
-#include "mysdl.h"
+#include <SDL_opengl.h>
 
 extern float piover180;
 extern float heading;
@@ -10,8 +10,7 @@ extern float xpos;
 extern GLfloat yrot;
 extern GLfloat zpos;
 
-extern void pollInput(void);
-extern void processSystemCommands(void);
+extern void checkForKeyPresses(void);
 extern bool checkCommand(int commandFlag);
 
 typedef enum {

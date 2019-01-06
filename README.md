@@ -5,8 +5,8 @@ A simple, sparsely-featured 3D engine focused on code understandability.
 * No more than one logical or arithmetic expression per-line.
 * Return statements should be on their own line, and not include an expression.
 * Inline comments are lowercase, fit on a single line, and have no trailing period.
-* Noteworthy sections of code are denoted with a heading style, and can have multiple lines of commentary (recommend no 
-  more than 5 lines).
+* Noteworthy sections of code are denoted with a heading style, with a single line comment below. Additional prose
+  should be placed in `tour.txt` to keep the code itself readable.
 * Author's discretion as to whether comments should be above or on the right of a statement (generally above is 
   preferred for readability).
 * Recommend maximum character limit of 120.

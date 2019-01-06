@@ -2,19 +2,18 @@
 #define COMMON_H
 
 #include <stdbool.h>
+#include <SDL.h>
 
 long getProgramTime_ms();
 bool checkIfDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
 
 
 
-#include "mysdl.h"
-
 #define WIDTH 640
 #define HEIGHT 480
 
 extern SDL_Window *window;
-extern bool running;
+extern bool stopTheGame;
 
 typedef struct {
     float x;
