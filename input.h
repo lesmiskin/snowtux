@@ -10,7 +10,7 @@ extern float xpos;
 extern GLfloat yrot;
 extern GLfloat zpos;
 
-extern void checkForKeyPresses(void);
+extern void checkForInput(void);
 extern bool checkCommand(int commandFlag);
 
 typedef enum {

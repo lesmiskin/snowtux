@@ -1,6 +1,7 @@
 #include "common.h"
 #include <time.h>               // needed for "clock()"
 
+SDL_Window *window = NULL;      // keep track of window, until it's time to shut down
 bool stopTheGame = false;       // stored in COMMON.C so we can toggle from anywhere in our code
 
 long getProgramTime_ms() {

@@ -18,7 +18,7 @@ bool checkCommand(int commandFlag) {
     return commands[commandFlag];
 }
 
-void checkForKeyPresses(void) {
+void checkForInput(void) {
     SDL_PumpEvents();
     const Uint8 *keysHeld = SDL_GetKeyboardState(NULL);
 

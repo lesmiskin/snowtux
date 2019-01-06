@@ -64,7 +64,7 @@ void loadTexture() {
     glBindTexture(GL_TEXTURE_2D, TextureID);  
 }
 
-void loadGraphics(void) {
+void loadGraphicsSubsystem(void) {
     //Init SDL renderer
     renderer = SDL_CreateRenderer(
         window,
@@ -95,7 +95,7 @@ void shutdownRenderer(void) {
 
 float blurg = 0;
 
-void showTheGraphics(void) {
+void updateGraphics(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);              // Clear the frame.
 
     glLoadIdentity();                          // Reset The Current Matrix (fucks out otherwise)
