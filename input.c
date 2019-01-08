@@ -31,7 +31,7 @@ void checkForInput(void) {
 		switch (event.type) {
 			// when the user tries to close the program in the normal fashion (e.g. clicks the "X" button)
 			case SDL_QUIT:
-				stopTheGame = true;
+				shouldStopGame = true;
 				break;
 
 			//Presses
@@ -45,7 +45,7 @@ void checkForInput(void) {
 
 				// if the user presses the ESCAPE key, then we should also quit the game
 				if (keypress == SDL_SCANCODE_ESCAPE) {
-					stopTheGame = true;
+					shouldStopGame = true;
 				}
 			}
 		}

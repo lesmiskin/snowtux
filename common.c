@@ -1,30 +1,13 @@
 #include "common.h"
-#include <time.h>               // needed for "clock()"
+#include <time.h>
 
-SDL_Window *window = NULL;      // keep track of window, until it's time to shut down
-bool stopTheGame = false;       // stored in COMMON.C so we can toggle from anywhere in our code
+SDL_Window *window = NULL;      // TODO: possibly not needed (or at least here)
+bool shouldStopGame = false;
 
-long getProgramTime_ms() {
-	// get the amount of time the program has been running for, in "ticks" (special units of time used by computers)
-	long time_ticks = clock();
-
-	// do a calculation to check how many ticks are in a millisecond, as this can change between types of computers
-	long ticksPerMillisecond = CLOCKS_PER_SEC / 1000;
-
-	// convert the ticks to milliseconds, now that we have the correct units to do so
-	long time_ms = time_ticks / ticksPerMillisecond;
-
-	return time_ms;
+long getCurrentProgramTime() {
+	return clock() / (CLOCKS_PER_SEC / 1000);		// convert ticks to milliseconds
 }
 
-bool checkIfDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms) {
-	long time_ms = getProgramTime_ms();
-
-	// figure out the amount of time it's been since the last operation happened
-	long timeSinceLastOperation_ms = time_ms - timeOfLastOperation_ms;
-
-	// if enough time has elapsed since the last operation, then we want to do the next operation
-	bool isDue = timeSinceLastOperation_ms >= timeUntilNextOperation_ms;
-
-	return isDue;
+bool isDue(long timeOfLastOperation, float timeUntilNextOperation) {
+	return (getCurrentProgramTime() - timeOfLastOperation) >= timeUntilNextOperation;
 }
