@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include <SDL_opengl.h>
 #include <GL/glu.h>
 #include "common.h"
@@ -6,7 +7,7 @@
 
 SDL_Renderer *renderer = NULL;
 
-void initOpenGl() {
+void initOpenGl(void) {
     SDL_GLContext mainContext = SDL_GL_CreateContext(window);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -23,7 +24,7 @@ void initOpenGl() {
     glMatrixMode(GL_MODELVIEW);
 }
 
-void loadTexture() {
+void loadTexture(void) {
     GLuint TextureID = 0;
     int Mode = GL_RGB;
     glGenTextures(1, &TextureID);
@@ -61,29 +62,36 @@ void initGraphics(void) {
     playerPosZ = 10;
 }
 
-void processGraphics() {
-	// frame initialisation
+void processGraphics(void) {
+    // prepare frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glPushMatrix();
 
-    // rotation
+    // rotate for player view
     float sceneroty = 360.0f - playerLookY;
     glRotatef(sceneroty, 0, 1, 0);
 
-    // translation
+    // translate for player position
     float xtrans = -playerPosX;
     float ztrans = -playerPosZ;
     glTranslatef(xtrans, 0, ztrans);
 
 	// draw our objects
-	drawSolidCube();
-	drawTexturedFace();
+	//drawSolidCube();
+	//drawTexturedFace();
 
-    SDL_GL_SwapWindow(window);		// show graphics on window
+    // draw a solid face.
+    point2 scale = makePoint2(0.5f, 2.0f);
+    point3 angle = makePoint3(0, 0, 0);
+    point3 pos = makePoint3(0, 0, -2.0f);
+    color c = makeColor(0,255,0);
+    drawFace(scale, c, angle, pos);
+
+    SDL_GL_SwapWindow(window);		// show graphics
 }
 
-void shutdownGraphics() {
+void shutdownGraphics(void) {
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL;
 }

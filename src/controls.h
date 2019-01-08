@@ -14,7 +14,7 @@ extern bool turningRight;
 extern bool movingBack;
 extern bool movingForward;
 
-extern void resetControls();
-extern void applyControlsToPlayer();
+extern void resetControls(void);
+extern void applyControlsToPlayer(void);
 
 #endif

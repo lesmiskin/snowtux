@@ -12,14 +12,14 @@ float playerLookY = 0;
 float playerPosX = 0;
 float playerPosZ = 0;
 
-void resetControls() {
+void resetControls(void) {
 	turningLeft = false;
 	turningRight = false;
 	movingForward = false;
 	movingBack = false;
 }
 
-void applyControlsToPlayer() {
+void applyControlsToPlayer(void) {
 	if (turningLeft) {
 		playerFaceY += 1.5f;
 		playerLookY = playerFaceY;

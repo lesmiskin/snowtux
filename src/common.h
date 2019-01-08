@@ -10,14 +10,27 @@ extern const int WINDOW_HEIGHT;
 extern bool shouldStopGame;
 extern SDL_Window *window;
 
-long getCurrentProgramTime();
-bool isDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
-
-// hmmm...
 typedef struct {
-    float x;
+    float x; 
     float y;
+} point2;
+
+typedef struct {
+    float x; 
+    float y; 
     float z;
-} Coord;
+} point3;
+
+typedef struct {
+    int r;
+    int g;
+    int b;
+} color;
+
+long getCurrentProgramTime(void);
+bool isDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
+color makeColor(int r, int g, int b);
+point2 makePoint2(float x, float y);
+point3 makePoint3(float x, float y, float z);
 
 #endif

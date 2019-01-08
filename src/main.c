@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "common.h"
 #include "graphics.h"
 #include "input.h"
@@ -6,7 +7,7 @@
 const char* WINDOW_TITLE = "Easy 3D Engine";
 const int FRAMES_PER_SECOND = 60;
 
-static void shutdownSdl() {
+static void shutdownSdl(void) {
     shutdownGraphics();
 
     SDL_DestroyWindow(window);
@@ -15,7 +16,7 @@ static void shutdownSdl() {
     SDL_Quit();
 }
 
-static void startSdl() {
+static void startSdl(void) {
     SDL_Init(SDL_INIT_VIDEO);
 
     window = SDL_CreateWindow(
