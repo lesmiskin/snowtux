@@ -1,7 +1,7 @@
 # "Easy 3D Engine" by Les Miskin
 An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
 
-[](docs/screenshot.png)
+<img src="docs/screenshot.png" width="50%">
 
 # Getting Started
 To compile and run the engine, you must have a compatible development environment and a few supporting libraries installed.
