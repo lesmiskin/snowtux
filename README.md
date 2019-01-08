@@ -2,13 +2,20 @@
 An easy-to-understand 3D game engine, for learning and experimenting. Forking and hacking the code for your own project is encouraged :)
 
 # Installation
-1. Download two files from https://www.libsdl.org/download-2.0.php:
-    - Runtime Binaries (for 32-bit Windows)
-    - Development Libraries (for Windows and Visual C++)
-2. Download GLEW from http://glew.sourceforge.net/
-3. From the Runtime Binaries file, extract the `SDL2.0.DLL` file to your `C:\Windows` directory.
-4. Extract the Development Libraries file to `C:\SDK` (e.g. `C:\SDK\SDL2-2.0.9`).
-5. Extract the GLEW file to `C:\SDK` (e.g. `C:\SDK\glew-2.1.0`).
+**Note: You must be running a Windows computer**
+1. Clone or download the "easy-3d-engine" repository to a location on your computer.
+2. If you don't already have it, download and install the Visual Studio Community Edition from https://visualstudio.microsoft.com/
+3. Download the SDL support files from https://www.libsdl.org/download-2.0.php:
+    - Under "Runtime Binaries -> Windows", the "32-bit Windows" download.
+    - Under "Development Libraries -> Windows", the "Visual C++ 32/64-bit" download.
+4. Download the GLEW support file from http://glew.sourceforge.net/
+    - Under "Downloads -> Binaries", the "Windows 32-bit and 64-bit" download.
+5. From the Runtime Binaries file, extract `SDL2.DLL` to `C:\Windows`.
+6. From the Development Libraries file, extract the contents to `C:\SDK` (e.g. `C:\SDK\SDL2-2.0.9`).
+7. From the GLEW file, extract the contents to `C:\SDK` (e.g. `C:\SDK\glew-2.1.0`).
+8. From the "easy-3d-engine" folder on your computer, open the `easy-3d-engine.sln` file.
+9. Once the solution has loaded in Visual Studio, you can start the program by clicking on the `Debug` menu, then `Start Without Debugging`.
+10. Use the arrow keys to move the camera around, or press `ESC` to quit.
 
 # Technical notes
 * For simplicity we standardise on 32-bit for the build, and third-party libraries.
