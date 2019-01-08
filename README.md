@@ -1,8 +1,4 @@
-**DISCLAIMER**
-
-This project is currently a *work-in-progress*, and certain files will not be of final quality in terms of content and structure. Please keep this in mind when examining the source code.
-
-**DISCLAIMER**
+**IMPORTANT:** This project is currently a *work-in-progress*, and certain files will not be of final quality in terms of content and structure. Please keep this in mind when examining the source code.
 
 ---
 
