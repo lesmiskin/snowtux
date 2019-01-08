@@ -1,3 +1,9 @@
+# UNDER DEVELOPMENT
+
+**This project is currently a work-in-progress, and certain files will not be of final quality in terms of content and structure**
+
+---
+
 # "Easy 3D Engine" by Les Miskin
 An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
 
