@@ -19,9 +19,9 @@ An easy-to-understand 3D game engine, for *learning and experimenting*. Forking 
 3. Download the following file from the [GLEW web site](http://glew.sourceforge.net/):
     - Under `Downloads : Binaries`, click the `Windows 32-bit and 64-bit` link.
 4. Extract the downloaded files as follows:
-    - Copy `SDL2.DLL` from the `Runtime Binaries` file intoto `C:\Windows`.
-    - Extract the `Development Libraries` file into `C:\SDK`.
-    - Extract the `GLEW` file into `C:\SDK`.
+    - `Runtime Binaries` → `C:\Windows`
+    - `Development Libraries` → `C:\SDK`
+    - `GLEW` → `C:\SDK`
 7. Open the `easy-3d-engine.sln` solution file (assuming you have already downloaded / cloned this repo).
 8. From Visual Studio, start the engine by clicking on the `Debug` menu, then `Start Without Debugging`.
 9. Once the engine has started, use the arrow keys to move the camera around, and press `ESC` to quit.
