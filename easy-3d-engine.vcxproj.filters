@@ -15,34 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="common.c">
+    <ClCompile Include="src/common.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input.c">
+    <ClCompile Include="src/input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="src/main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.c">
+    <ClCompile Include="src/graphics.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common.h">
+    <ClInclude Include="src/common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
+    <ClInclude Include="src/input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.h">
+    <ClInclude Include="src/graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="tour.txt" />
   </ItemGroup>
 </Project>
