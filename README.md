@@ -13,18 +13,21 @@ An easy-to-understand 3D game engine, for *learning and experimenting*. Forking 
 
 1. Install [Visual Studio Community Edition](https://visualstudio.microsoft.com)
     - Remember to toggle the `Desktop development with C++` feature.
-2. Download the following files fom the [SDL web site](https://www.libsdl.org/download-2.0.php):
+2. Install the SDL runtime:
+    - Open the [SDL download page](https://www.libsdl.org/download-2.0.php).
     - Under `Runtime Binaries : Windows`, click the `32-bit Windows` link.
-    - Under `Development Libraries : Windows`, click the `Visual C++ 32/64-bit` link.
-3. Download the following file from the [GLEW web site](http://glew.sourceforge.net/):
-    - Under `Downloads : Binaries`, click the `Windows 32-bit and 64-bit` link.
-4. Extract the downloaded files as follows:
-    - `Runtime Binaries` → `C:\Windows`
-    - `Development Libraries` → `C:\SDK`
-    - `GLEW` → `C:\SDK`
-7. Open the `easy-3d-engine.sln` solution file (assuming you have already downloaded / cloned this repo).
-8. From Visual Studio, start the engine by clicking on the `Debug` menu, then `Start Without Debugging`.
-9. Once the engine has started, use the arrow keys to move the camera around, and press `ESC` to quit.
+    - Extract the `SDL2.DLL` file to `C:\Windows`.
+3. Install the SDL SDK:
+    - From the same page as above, under `Development Libraries : Windows`, click the `Visual C++ 32/64-bit` link.
+    - Extract the file to `C:\SDK`.
+4. Install GLEW:
+    - Open the [GLEW download page](http://glew.sourceforge.net/).
+    - Click the `Windows 32-bit and 64-bit` link.
+    - Extract the file to `C:\SDK`
+5. Ensure you have downloaded or cloned this repository, by clicking the green button above.
+6. Open the project in Visual Studio by loading the `easy-3d-engine.sln` file from your local repository folder.
+6. Start the engine by clicking on the `Debug` menu in Visual Studio, then `Start Without Debugging`.
+7. Move around in the engine with the arrow keys, and press `ESC` to quit.
 
 # Technical notes
 * For simplicity we standardise on 32-bit for the build, and third-party libraries.
