@@ -11,6 +11,10 @@ Forking and hacking is encouraged =)
 4. Extract the Development Libraries file to `C:\SDK` (e.g. `C:\SDK\SDL2-2.0.9`).
 5. Extract the GLEW file to `C:\SDK` (e.g. `C:\SDK\glew-2.1.0`).
 
+# Technical notes
+* For simplicity we standardise on 32-bit for the build, and third-party libraries.
+* As a starting point, we use the (now deprecated) Fixed Function Pipeline approach for OpenGL. We will move to the modern shader-driven approach as time permits.
+
 # Contributor guidelines
 
 ## Coding style
