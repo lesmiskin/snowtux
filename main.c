@@ -3,7 +3,7 @@
 #include "input.h"
 
 // configuration settings
-const char* WINDOW_TITLE = "Simple 3D engine";
+const char* WINDOW_TITLE = "Easy 3D engine";
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 const int FRAMES_PER_SECOND = 60;
