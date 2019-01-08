@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <SDL_opengl.h>
 
-extern GLfloat playerFaceY;
-extern GLfloat playerLookY;
+extern float playerFaceY;
+extern float playerLookY;
 extern float playerPosX;
 extern float playerPosZ;
 

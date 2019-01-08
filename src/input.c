@@ -9,14 +9,14 @@ void checkForInputAndEvents(void) {
     SDL_Event event;
     while(SDL_PollEvent(&event) != 0) {
 		switch (event.type) {
-			// system event: if the OS wants our app to close, let it exit the game loop cleanly
+			// handle system events
 			case SDL_QUIT:
 				shouldStopGame = true;
 				break;
 
-			// input event: handle single key presses
+			// handle single key presses
 			case SDL_KEYDOWN: {
-				// ignore continually held-down keys (handled separately)
+				// we handle held keys elsewhere
 				if (event.key.repeat) {
 					break;
 				}
@@ -29,9 +29,8 @@ void checkForInputAndEvents(void) {
 		}
 	}
 
-	const Uint8 *heldKeys = SDL_GetKeyboardState(NULL);
-
 	// handle held-down keys
+	const Uint8 *heldKeys = SDL_GetKeyboardState(NULL);
 	if (heldKeys[SDL_SCANCODE_LEFT]) {
 		turningLeft = true;
 	} else if (heldKeys[SDL_SCANCODE_RIGHT]) {

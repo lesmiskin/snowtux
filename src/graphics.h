@@ -7,8 +7,8 @@
 extern SDL_Renderer *renderer;
 extern SDL_Texture *renderBuffer;
 extern Coord screenBounds;
-extern void loadGraphicsSubsystem();
-extern void shutdownRenderer();
-extern void updateGraphics();
+extern void initGraphics();
+extern void shutdownGraphics();
+extern void processGraphics();
 
 #endif

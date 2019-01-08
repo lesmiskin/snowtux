@@ -1,6 +1,5 @@
 #include <math.h>
 #include <stdbool.h>
-#include <SDL_opengl.h>
 
 bool turningLeft = false;
 bool turningRight = false;
@@ -8,8 +7,8 @@ bool movingBack = false;
 bool movingForward = false;
 
 float piOver180 = 0.0174532925f;
-GLfloat playerFaceY = 0;
-GLfloat playerLookY = 0;
+float playerFaceY = 0;
+float playerLookY = 0;
 float playerPosX = 0;
 float playerPosZ = 0;
 

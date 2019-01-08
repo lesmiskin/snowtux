@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <SDL.h>
 
+extern const int WINDOW_WIDTH;
+extern const int WINDOW_HEIGHT;
+
 extern bool shouldStopGame;
 extern SDL_Window *window;
 

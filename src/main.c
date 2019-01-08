@@ -3,14 +3,11 @@
 #include "input.h"
 #include "controls.h"
 
-// configuration settings
 const char* WINDOW_TITLE = "Easy 3D Engine";
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
 const int FRAMES_PER_SECOND = 60;
 
 static void shutdownSdl() {
-    shutdownRenderer();
+    shutdownGraphics();
 
     SDL_DestroyWindow(window);
     window = NULL;
@@ -30,7 +27,7 @@ static void startSdl() {
         SDL_WINDOW_OPENGL
     );
 
-    loadGraphicsSubsystem();
+    initGraphics();
 
     // ensure SDL is always shut down cleanly when the program quits.
     atexit(shutdownSdl);
@@ -51,7 +48,7 @@ int main(int argc, char *argv[]) {
         if (isFrameDue) {
             checkForInputAndEvents();
 			applyControlsToPlayer();
-			updateGraphics();
+			processGraphics();
 
             timeOfLastFrame_ms = getCurrentProgramTime();
         }

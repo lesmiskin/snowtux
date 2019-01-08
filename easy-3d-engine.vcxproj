@@ -133,12 +133,14 @@
     <ClCompile Include="src/main.c" />
     <ClCompile Include="src/graphics.c" />
     <ClCompile Include="src\controls.c" />
+    <ClCompile Include="src\shapes.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/common.h" />
     <ClInclude Include="src/input.h" />
     <ClInclude Include="src/graphics.h" />
     <ClInclude Include="src\controls.h" />
+    <ClInclude Include="src\shapes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
