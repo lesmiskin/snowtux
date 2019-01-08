@@ -1,6 +1,5 @@
-# Simple 3D Game Engine by Les Miskin
-An easy-to-comprehend 3D game engine, designed as a platform for learning and experimentation. 
-Forking and hacking is encouraged =)
+# "Easy 3D Engine" by Les Miskin
+An easy-to-understand 3D game engine, for learning and experimenting. Forking and hacking the code for your own project is encouraged :)
 
 # Installation
 1. Download two files from https://www.libsdl.org/download-2.0.php:
