@@ -1,8 +1,11 @@
 # "Easy 3D Engine" by Les Miskin
 An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
 
-# Installation
-**Note: You must be running a Windows computer**
+# Getting Started
+To compile and run the engine, you must have a compatible development environment and a few supporting libraries installed.
+
+**Note: These instructions are only applicable for Windows computers**
+
 1. Clone or download the `easy-3d-engine` repository to a location on your computer.
 2. If you don't already have it, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com).
 3. Download the [SDL support files](https://www.libsdl.org/download-2.0.php):
@@ -13,9 +16,13 @@ An easy-to-understand 3D game engine, for **learning and experimenting**. Forkin
 5. Extract the `Runtime Binaries` file into `C:\Windows`.
 6. Extract the `Development Libraries` file into `C:\SDK`.
 7. Extract the `GLEW` file into `C:\SDK`.
-8. Open the `easy-3d-engine.sln` file from your `easy-3d-engine` repository folder.
-9. Once the solution has loaded in Visual Studio, start the program by clicking on the `Debug` menu, then `Start Without Debugging`.
-10. Use the arrow keys to move the camera around, or press `ESC` to quit.
+
+You are now ready to run the engine from your development environment.
+
+# Running the engine
+1. Open the `easy-3d-engine.sln` file from the `easy-3d-engine` repository folder on your computer.
+2. Once the solution has loaded in Visual Studio, start the program by clicking on the `Debug` menu, then `Start Without Debugging` (you can also use the keyboard shortcut `CTRL`+`F5`).
+3. Use the arrow keys to move the camera around, or press `ESC` to quit.
 
 # Technical notes
 * For simplicity we standardise on 32-bit for the build, and third-party libraries.
