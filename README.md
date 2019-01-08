@@ -11,19 +11,18 @@ An easy-to-understand 3D game engine, for *learning and experimenting*. Forking 
 
 # Getting Started
 
-1. Clone or download the `easy-3d-engine` repository to a location on your computer.
-2. If you don't already have it, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com).
-3. Download the [SDL support files](https://www.libsdl.org/download-2.0.php):
+1. Install [Visual Studio Community Edition](https://visualstudio.microsoft.com).
+2. Download the [SDL support files](https://www.libsdl.org/download-2.0.php):
     - Under `Runtime Binaries : Windows`, click the `32-bit Windows` link.
     - Under `Development Libraries : Windows`, click the `Visual C++ 32/64-bit` link.
-4. Download the [GLEW support file](http://glew.sourceforge.net/)
+3. Download the [GLEW support file](http://glew.sourceforge.net/)
     - Under `Downloads : Binaries`, click the `Windows 32-bit and 64-bit` link.
-5. Extract the `Runtime Binaries` file into `C:\Windows`.
-6. Extract the `Development Libraries` file into `C:\SDK`.
-7. Extract the `GLEW` file into `C:\SDK`.
-8. Open the `easy-3d-engine.sln` file from the `easy-3d-engine` repository folder on your computer.
-9. Once the solution has loaded in Visual Studio, start the program by clicking on the `Debug` menu, then `Start Without Debugging` (you can also use the keyboard shortcut `CTRL`+`F5`).
-10. Use the arrow keys to move the camera around, or press `ESC` to quit.
+4. Extract the `Runtime Binaries` file into `C:\Windows`.
+5. Extract the `Development Libraries` file into `C:\SDK`.
+6. Extract the `GLEW` file into `C:\SDK`.
+7. Open the `easy-3d-engine.sln` solution file.
+8. Start the program by clicking on the `Debug` menu, then `Start Without Debugging`.
+9. Use the arrow keys to move the camera around, and press `ESC` to quit.
 
 # Technical notes
 * For simplicity we standardise on 32-bit for the build, and third-party libraries.
