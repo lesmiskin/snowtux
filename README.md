@@ -3,11 +3,11 @@
 ---
 
 # Introduction
-An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
+An easy-to-understand 3D game engine, for *learning and experimenting*. Forking and hacking the code for your own project is also encouraged :)
 
 <img src="docs/screenshot.png" width="50%">
 
-**Note:** The engine is only designed to be buildable on Windows systems at the moment. The plan is to support Mac and Linux in the near future.
+**Note:** The engine is currently only buildable on Windows systems.
 
 # Getting Started
 
