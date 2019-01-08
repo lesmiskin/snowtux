@@ -4,7 +4,7 @@
 
 ---
 
-# "Easy 3D Engine" by Les Miskin
+# Introduction
 An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
 
 <img src="docs/screenshot.png" width="50%">
