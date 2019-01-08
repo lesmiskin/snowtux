@@ -3,6 +3,7 @@
 #include <SDL_opengl.h>
 #include <GL/glu.h>
 
+#include "controls.h"
 #include "graphics.h"
 #include "input.h"
 #include "mysdl.h"
@@ -19,6 +20,9 @@ Coord makeCoord(float x, float y, float z) {
     Coord c = { x, y, z };
     return c;
 }
+
+#define WIDTH 640
+#define HEIGHT 480
 
 void initOpenGl() {
     mainContext = SDL_GL_CreateContext(window);
@@ -83,7 +87,7 @@ void loadGraphicsSubsystem(void) {
 
     initOpenGl();
     loadTexture();
-    zpos = 10;
+    playerPosZ = 10;
 }
 
 void shutdownRenderer(void) {
@@ -102,12 +106,12 @@ void updateGraphics(void) {
     glPushMatrix();
 
     // looking around 
-    GLfloat sceneroty = 360.0f - yrot;         // 360 Degree Angle For Player Direction
+    GLfloat sceneroty = 360.0f - playerLookY;         // 360 Degree Angle For Player Direction
     glRotatef(sceneroty, 0, 1, 0);             // Rotate Depending On Direction Player Is Facing
 
     // camera translation     
-    GLfloat xtrans = -xpos;                    // Used For Player Translation On The X Axis
-    GLfloat ztrans = -zpos;                    // Used For Player Translation On The Z Axis
+    GLfloat xtrans = -playerPosX;                    // Used For Player Translation On The X Axis
+    GLfloat ztrans = -playerPosZ;                    // Used For Player Translation On The Z Axis
     glTranslatef(xtrans, 0, ztrans);           // Translate The Scene Based On Player Position
 
     float i = -10.1f;

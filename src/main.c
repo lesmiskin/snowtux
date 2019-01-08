@@ -1,6 +1,7 @@
 #include "common.h"
 #include "graphics.h"
 #include "input.h"
+#include "controls.h"
 
 // configuration settings
 const char* WINDOW_TITLE = "Easy 3D Engine";
@@ -48,8 +49,9 @@ int main(int argc, char *argv[]) {
 
         // main game frame starts here
         if (isFrameDue) {
-            checkForInput();
-            updateGraphics();
+            checkForInputAndEvents();
+			applyControlsToPlayer();
+			updateGraphics();
 
             timeOfLastFrame_ms = getCurrentProgramTime();
         }
