@@ -1,17 +1,15 @@
 # "Easy 3D Engine" by Les Miskin
-An easy-to-understand 3D game engine, for learning and experimenting. 
-
-Forking and hacking the code for your own project is encouraged :)
+An easy-to-understand 3D game engine, for **learning and experimenting**. Forking and hacking the code for your own project is also encouraged :)
 
 # Installation
 **Note: You must be running a Windows computer**
 1. Clone or download the `easy-3d-engine` repository to a location on your computer.
-2. If you don't already have it, download and install **Visual Studio Community Edition** from https://visualstudio.microsoft.com/
-3. Download the **SDL support files** from https://www.libsdl.org/download-2.0.php:
-    - Under `Runtime Binaries : Windows`, the `32-bit Windows` download.
-    - Under `Development Libraries : Windows`, the `Visual C++ 32/64-bit` download.
-4. Download the **GLEW support file** from http://glew.sourceforge.net/
-    - Under `Downloads : Binaries`, the `Windows 32-bit and 64-bit` download.
+2. If you don't already have it, download and install [Visual Studio Community Edition](https://visualstudio.microsoft.com)
+3. Download the [SDL support files](https://www.libsdl.org/download-2.0.php):
+    - Under `Runtime Binaries : Windows`, click the `32-bit Windows` link.
+    - Under `Development Libraries : Windows`, click the `Visual C++ 32/64-bit` link.
+4. Download the [GLEW support file](http://glew.sourceforge.net/)
+    - Under `Downloads : Binaries`, click the `Windows 32-bit and 64-bit` link.
 5. From the `Runtime Binaries` file, extract `SDL2.DLL` to `C:\Windows`.
 6. From the `Development Libraries` file, extract the contents to `C:\SDK` (e.g. `C:\SDK\SDL2-2.0.9`).
 7. From the GLEW file, extract the contents to `C:\SDK` (e.g. `C:\SDK\glew-2.1.0`).
