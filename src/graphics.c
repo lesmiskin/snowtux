@@ -60,19 +60,25 @@ void initGraphics(void) {
     loadTexture();
 }
 
+void drawCeilingAndFloor() {
+	// ceiling
+	glClearColor(0.3, 0.3, 0.3, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.5, 0.5, 0.5, 1.0);
+
+	// floor
+	glScissor(0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
+	glEnable(GL_SCISSOR_TEST);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_SCISSOR_TEST);
+}
+
 void processGraphics(void) {
     // init
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-	// draw ceiling and floor as solid colors (WORLD)
-	glClearColor(0.3, 0.3, 0.3, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);			// ceiling
-	glClearColor(0.5, 0.5, 0.5, 1.0);
-	glScissor(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
-	glEnable(GL_SCISSOR_TEST);
-	glClear(GL_COLOR_BUFFER_BIT);			// floor
-	glDisable(GL_SCISSOR_TEST);
+	drawCeilingAndFloor();
 
     // adjust camera for player position
 	glRotatef(360.0f - playerLookY, 0, 1, 0);
