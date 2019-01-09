@@ -3,6 +3,6 @@
 
 #include "common.h"
 
-extern void drawCube(point3 pos, float size);
+extern void drawWall(point3 pos, float size);
 
 #endif

@@ -58,8 +58,6 @@ void initGraphics(void) {
 
     initOpenGl();
     loadTexture();
-
-    playerPosZ = 10;		// should be in WORLD.C
 }
 
 void processGraphics(void) {
@@ -67,14 +65,28 @@ void processGraphics(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
+	// draw ceiling and floor as solid colors (WORLD)
+	glClearColor(0.3, 0.3, 0.3, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);			// ceiling
+	glClearColor(0.5, 0.5, 0.5, 1.0);
+	glScissor(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
+	glEnable(GL_SCISSOR_TEST);
+	glClear(GL_COLOR_BUFFER_BIT);			// floor
+	glDisable(GL_SCISSOR_TEST);
+
     // adjust camera for player position
 	glRotatef(360.0f - playerLookY, 0, 1, 0);
     glTranslatef(-playerPosX, 0, -playerPosZ);
 
-    // draw a cube
+	// draw a 10x10 room, using cubes (WORLD)
 	// TODO: should be in WORLD.C
-    point3 pos = makePoint3(0, 0.5f, 0);
-    drawCube(pos, 1.0f);
+	float size = 1.0f;
+	for (int i = -5; i < 5; i++) {
+		drawWall(makePoint3(i, 0, -5), size);	// front
+		drawWall(makePoint3(i, 0, 5), size);	// back
+		drawWall(makePoint3(-5, 0, i), size);	// left
+		drawWall(makePoint3(5, 0, i), size);	// right
+	}
 
     SDL_GL_SwapWindow(window);		// show graphics
 }
