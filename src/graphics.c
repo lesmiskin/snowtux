@@ -25,28 +25,27 @@ void initOpenGl(void) {
 }
 
 void loadTexture(void) {
-    GLuint TextureID = 0;
-    int Mode = GL_RGB;
-	glGenTextures(1, &TextureID);
-    glBindTexture(GL_TEXTURE_2D, TextureID);
-	
-	SDL_Surface* Surface = SDL_LoadBMP("data/wall2.bmp");
+	// init
+    int textureId = 0;
+    int mode = GL_RGB;
+	glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+
+	SDL_Surface* surface = SDL_LoadBMP("data/wall.bmp");
 
 	// enable alpha-transparency
-	if(Surface->format->BytesPerPixel == 4) {
-        Mode = GL_RGBA;
+	if(surface->format->BytesPerPixel == 4) {
+        mode = GL_RGBA;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
+	// make the texture
+    glTexImage2D(GL_TEXTURE_2D, 0, mode, surface->w, surface->h, 0, mode, GL_UNSIGNED_BYTE, surface->pixels);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    // for repeating textures only
+    // repeating texture support
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // for repeating textures only
-
-    glBindTexture(GL_TEXTURE_2D, TextureID);  
 }
 
 void initGraphics(void) {
@@ -59,25 +58,21 @@ void initGraphics(void) {
 
     initOpenGl();
     loadTexture();
-    playerPosZ = 10;
+
+    playerPosZ = 10;		// should be in WORLD.C
 }
 
 void processGraphics(void) {
-    // prepare frame
+    // init
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    // rotate for player view
-    float sceneroty = 360.0f - playerLookY;
-    glRotatef(sceneroty, 0, 1, 0);
-
-    // translate for player position
-    float xtrans = -playerPosX;
-    float ztrans = -playerPosZ;
-    glTranslatef(xtrans, 0, ztrans);
+    // adjust camera for player position
+	glRotatef(360.0f - playerLookY, 0, 1, 0);
+    glTranslatef(-playerPosX, 0, -playerPosZ);
 
     // draw a cube
-	// TODO: factor this out (e.g. world.c?)
+	// TODO: should be in WORLD.C
     point3 pos = makePoint3(0, 0.5f, 0);
     drawCube(pos, 1.0f);
 
