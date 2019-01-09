@@ -27,16 +27,16 @@ void initOpenGl(void) {
 void loadTexture(void) {
     GLuint TextureID = 0;
     int Mode = GL_RGB;
-    glGenTextures(1, &TextureID);
+	glGenTextures(1, &TextureID);
     glBindTexture(GL_TEXTURE_2D, TextureID);
-
-	SDL_Surface* Surface = SDL_LoadBMP("data/grass.bmp");
+	
+	SDL_Surface* Surface = SDL_LoadBMP("data/wall2.bmp");
 
 	// enable alpha-transparency
 	if(Surface->format->BytesPerPixel == 4) {
         Mode = GL_RGBA;
     }
- 
+
     glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -66,7 +66,6 @@ void processGraphics(void) {
     // prepare frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glPushMatrix();
 
     // rotate for player view
     float sceneroty = 360.0f - playerLookY;
@@ -77,16 +76,10 @@ void processGraphics(void) {
     float ztrans = -playerPosZ;
     glTranslatef(xtrans, 0, ztrans);
 
-	// draw our objects
-	//drawSolidCube();
-	//drawTexturedFace();
-
-    // draw a solid face.
-    point2 scale = makePoint2(0.5f, 2.0f);
-    point3 angle = makePoint3(0, 0, 0);
-    point3 pos = makePoint3(0, 0, -2.0f);
-    color c = makeColor(0,255,0);
-    drawFace(scale, c, angle, pos);
+    // draw a cube
+	// TODO: factor this out (e.g. world.c?)
+    point3 pos = makePoint3(0, 0.5f, 0);
+    drawCube(pos, 1.0f);
 
     SDL_GL_SwapWindow(window);		// show graphics
 }
