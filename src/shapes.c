@@ -19,7 +19,6 @@ void drawWall(point3 pos, float size) {
 	// position the object (proportional to a cube grid)
 	glTranslatef(pos.x * (size*2), pos.y * (size*2), pos.z * (size*2));
 
-	// draw faces individually, repositioning each time
 	for (int i = 0; i < 6; i++) {
 		glPushMatrix();
 
@@ -60,7 +59,5 @@ void drawWall(point3 pos, float size) {
 	}
 
 	glDisable(GL_TEXTURE_2D);
-
-	// close out of our translated mode
 	glPopMatrix();
 }
