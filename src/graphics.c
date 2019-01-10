@@ -22,24 +22,49 @@ void initOpenGl(void) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+int TEX_WALL = 0;
+int TEX_EYE = 1;
+
+//void make_tex(void)
+//{
+//	unsigned char data[256][256][3];
+//	for (int y = 0; y < 255; y++) {
+//		for (int x = 0; x < 255; x++) {
+//			unsigned char *p = data[y][x];
+//			p[0] = p[1] = p[2] = (x ^ y) & 8 ? 255 : 0;
+//		}
+//	}
+//	glGenTextures(1, &TEX_EYE);
+//	glBindTexture(GL_TEXTURE_2D, TEX_EYE);
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, (const GLvoid *)data);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//}
+
 void loadTexture(void) {
-    int textureId = 0;
     int format = GL_RGB;
-	glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-	SDL_Surface* surface = SDL_LoadBMP("data/wall.bmp");
 
-	if(surface->format->BytesPerPixel == 4) {
-        format = GL_RGBA;
-    }
+	glGenTextures(1, &TEX_WALL);
+    glBindTexture(GL_TEXTURE_2D, TEX_WALL);
+	SDL_Surface* wall = SDL_LoadBMP("data/wall.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, format, wall->w, wall->h, 0, format, GL_UNSIGNED_BYTE, wall->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format, surface->w, surface->h, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenTextures(1, &TEX_EYE);
+	glBindTexture(GL_TEXTURE_2D, TEX_EYE);
+	SDL_Surface* eye = SDL_LoadBMP("data/eyeball.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, format, eye->w, eye->h, 0, format, GL_UNSIGNED_BYTE, eye->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    // repeating textures
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//if(wall->format->BytesPerPixel == 4) {
+ //       format = GL_RGBA;
+ //   }
 }
 
 void initGraphics(void) {
@@ -54,11 +79,11 @@ void initGraphics(void) {
 
 void drawCeilingAndFloor() {
 	// clear whole screen for ceiling
-	glClearColor(0.3, 0.3, 0.3, 1.0);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);		// dark grey
 	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(0.5, 0.5, 0.5, 1.0);
 
 	// clear lower part for floor
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);		// mid grey
 	glScissor(0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
 	glEnable(GL_SCISSOR_TEST);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -74,13 +99,28 @@ void processGraphics(void) {
 	glRotatef(360.0f - playerLookY, 0, 1, 0);
     glTranslatef(-playerPosX, 0, -playerPosZ);
 
+	// draw eye
+	glPushMatrix();
+	glColor3ub(255, 255, 255);		// blue
+	glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	GLUquadric* sphere = gluNewQuadric();
+	glEnable(GL_TEXTURE_2D);
+	gluQuadricDrawStyle(sphere, GLU_FILL);
+	glBindTexture(GL_TEXTURE_2D, TEX_EYE);
+	gluQuadricTexture(sphere, GL_TRUE);
+	gluQuadricNormals(sphere, GLU_SMOOTH);
+	gluSphere(sphere, 1.0, 32, 4);
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+
 	// draw a 10x10 room, using cubes (WORLD)
 	float size = 1.0f;
 	for (int i = -5; i < 5; i++) {
-		drawWall(makePoint3(i, 0, -5), size);	// front
-		drawWall(makePoint3(i, 0, 5), size);	// back
-		drawWall(makePoint3(-5, 0, i), size);	// left
-		drawWall(makePoint3(5, 0, i), size);	// right
+		drawWall(makePoint3((float)i, 0.0f, -5.0f), size);	// front
+		drawWall(makePoint3((float)i, 0.0f, 5.0f), size);	// back
+		drawWall(makePoint3(-5.0f, 0.0f, (float)i), size);	// left
+		drawWall(makePoint3(5.0f, 0.0f, (float)i), size);	// right
 	}
 
     SDL_GL_SwapWindow(window);

@@ -29,7 +29,7 @@ static void startSdl(void) {
 int main(int argc, char *argv[]) {
 	startSdl();
 	long timeOfLastFrame_ms = 0;
-    float timeUntilNextFrame_ms = 1000 / FRAMES_PER_SECOND;
+    float timeUntilNextFrame_ms = (float)1000 / (float)FRAMES_PER_SECOND;
 
     while (!stopGame) {
 		// for constant FPS

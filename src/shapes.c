@@ -15,6 +15,7 @@ void drawWall(point3 pos, float size) {
 	glPushMatrix();
 	glColor3ub(96,96,255);		// blue
 	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 1);
 
 	// position the object (proportional to a cube grid)
 	glTranslatef(pos.x * (size*2), pos.y * (size*2), pos.z * (size*2));
