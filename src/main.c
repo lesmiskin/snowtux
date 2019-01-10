@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <SDL_Image.h>
 #include "common.h"
 #include "graphics.h"
 #include "input.h"
@@ -16,6 +17,7 @@ static void shutdownSdl(void) {
 
 static void startSdl(void) {
     SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_PNG);
     window = SDL_CreateWindow(
         WINDOW_TITLE,
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
