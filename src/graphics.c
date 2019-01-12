@@ -30,6 +30,9 @@ void loadTexture(char* name) {
     glBindTexture(GL_TEXTURE_2D, tex);
 //    SDL_Surface* wall = SDL_LoadBMP(name);
     SDL_Surface* wall = IMG_Load(name);
+    if (wall->format->BytesPerPixel == 4) {
+        format = GL_RGBA;
+    }
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -37,15 +40,13 @@ void loadTexture(char* name) {
     glTexImage2D(GL_TEXTURE_2D, 0, format, wall->w, wall->h, 0, format, GL_UNSIGNED_BYTE, wall->pixels);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    //if(wall->format->BytesPerPixel == 4) {
- //       format = GL_RGBA;
- //   }
 }
 
 void loadTextures(void) {
     loadTexture("data/wall.bmp");
     loadTexture("data/eyeball3.png");
     loadTexture("data/eyeball4.png");
+    loadTexture("data/blood.png");
 }
 
 void initGraphics(void) {
@@ -71,6 +72,8 @@ void drawCeilingAndFloor() {
 	glDisable(GL_SCISSOR_TEST);
 }
 
+long lastDrip;
+
 void processGraphics(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -80,17 +83,24 @@ void processGraphics(void) {
 	glRotatef(360.0f - playerLookY, 0, 1, 0);
     glTranslatef(-playerPosX, 0, -playerPosZ);
 
-	// draw eye
+
+    if (isDue(lastDrip, 500)) {
+        spawnBlood();
+        lastDrip = clock();
+    }
+ 
+    // draw eye
+    drawBlood();
     drawEye(makePoint3(0.0f, 0.0f, 0.0f));
 
-	// draw a 10x10 room, using cubes (WORLD)
-	float size = 1.0f;
-	for (int i = -5; i < 5; i++) {
-		drawWall(makePoint3((float)i, 0.0f, -5.0f), size);	// front
-		drawWall(makePoint3((float)i, 0.0f, 5.0f), size);	// back
-		drawWall(makePoint3(-5.0f, 0.0f, (float)i), size);	// left
-		drawWall(makePoint3(5.0f, 0.0f, (float)i), size);	// right
-	}
+    // draw a 10x10 room, using cubes (WORLD)
+    float size = 1.0f;
+    for (int i = -5; i < 5; i++) {
+        drawWall(makePoint3((float)i, 0.0f, -5.0f), size);	// front
+        drawWall(makePoint3((float)i, 0.0f, 5.0f), size);	// back
+        drawWall(makePoint3(-5.0f, 0.0f, (float)i), size);	// left
+        drawWall(makePoint3(5.0f, 0.0f, (float)i), size);	// right
+    }
 
     SDL_GL_SwapWindow(window);
 }

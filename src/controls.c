@@ -8,8 +8,10 @@ bool movingForward = false;
 
 float piOver180 = 0.0174532925f;
 float playerLookY = 0;
+
+// TODO: move to WORLD.C
 float playerPosX = 0;
-float playerPosZ = 0;
+float playerPosZ = 3.0f;
 
 void resetControls(void) {
 	turningLeft = false;

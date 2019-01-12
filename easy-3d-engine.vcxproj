@@ -134,7 +134,6 @@
     <ClCompile Include="src/graphics.c" />
     <ClCompile Include="src\controls.c" />
     <ClCompile Include="src\shapes.c" />
-    <ClCompile Include="src\test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/common.h" />
