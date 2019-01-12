@@ -134,6 +134,7 @@
     <ClCompile Include="src/graphics.c" />
     <ClCompile Include="src\controls.c" />
     <ClCompile Include="src\shapes.c" />
+    <ClCompile Include="src\test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/common.h" />
@@ -143,7 +144,9 @@
     <ClInclude Include="src\shapes.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="README.md" />
+    <None Include="UNLICENSE" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <SDL_opengl.h>
 #include <GL/glu.h>
 #include "common.h"
@@ -94,25 +95,65 @@ long lastBlink = 0;
 int blinkInterval = 0;
 int lidCloseTime = 0;
 
+long lastMove = 0;
+int moveInterval = 0;
+float moveSpeed = 0.0f;
+point2 movePos = {0,0};
+point2 moveDir = { 0,0 };
+long lastPauseTime = 0;
+int flitInc = 0;
+bool shouldPause = false;
+
 void drawEye(point3 pos) {
     eyePosY += sineInc(0.0f, &eyeBobInc, 0.05, 0.005);
 
     glPushMatrix();
     glColor3ub(255, 255, 255);
 
-    glTranslatef(0.0f, eyePosY, 0.0f);
+	glTranslatef(0.0f, eyePosY, 0.0f);
 
     glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
     glRotatef(270.0f, 0.0f, 1.0f, 0.0f);
+
+	// up/down
+//	glRotatef(move += 0.1f, 1.0f, 0.0f, 0.0f);
 
     GLUquadric* sphere = gluNewQuadric();
     glEnable(GL_TEXTURE_2D);
     gluQuadricDrawStyle(sphere, GLU_FILL);
 
+	// does 1-2 flits, THEN PAUSES
+
+	// only move SOMETIMES
+
+	// moving
+	if (flitInc > 1) {
+		shouldPause = true;
+		lastPauseTime = SDL_GetTicks();
+	}
+	if (shouldPause) {
+		if(isDue(lastPauseTime, 2000)) {
+			shouldPause = false;
+			flitInc = randomMq(1, 3);
+		}
+	}
+	if (!shouldPause) {
+		if(isDue(lastMove, moveInterval)) {
+			lastMove = SDL_GetTicks();
+			moveInterval = randomMq(100, 200);
+			moveSpeed = (float)randomMq(-5, 5) / 10.0f;
+			moveDir.x = randomMq(-1, 1);
+			moveDir.y = randomMq(-1, 1);
+			flitInc++;
+		}
+		glRotatef(movePos.x += moveSpeed * 2, 0.0f, 0.0f, 1.0f);
+		glRotatef(movePos.y += moveSpeed / 2, 1.0f, 0.0f, 0.0f);
+	}
+
     // blinking
     if (isDue(lastBlink, blinkInterval)) {
         if (isDue(lastBlink, blinkInterval+lidCloseTime)) {
-            lastBlink = clock();
+            lastBlink = SDL_GetTicks();
             blinkInterval = randomMq(500, 3000);
             lidCloseTime = randomMq(50, 100);
         }
