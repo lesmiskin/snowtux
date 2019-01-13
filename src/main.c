@@ -1,3 +1,6 @@
+// DOORS
+// show a door, in a section of the map (defined with a coord)
+
 #include <stdlib.h>
 #include <SDL_Image.h>
 #include "common.h"

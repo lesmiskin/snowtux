@@ -5,35 +5,6 @@
 #include "graphics.h"
 #include "controls.h"
 
-void drawSprite(float size, float alpha, int textureIndex, point3 p, float rot) {
-    glPushMatrix();
-
-    glDisable(GL_DEPTH_TEST);
-    glTranslatef(p.x, p.y, p.z);
-    glRotatef(playerLookY, 0, 1, 0);        // always facing player
-    glRotatef(rot, 0.0f, 0.0f, 1.0f);       // spin sprite
-    glScalef(size, size, 1.0f);
-
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
-    glColor4f(1.0f, 1.0f, 1.0f, alpha);     // gradually translucent.
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBindTexture(GL_TEXTURE_2D, textureIndex);
-
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 0);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 0);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, 0);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, 0);
-    glEnd();
-
-    glDisable(GL_BLEND);
-    glDisable(GL_TEXTURE_2D);
-    glEnable(GL_DEPTH_TEST);
-
-    glPopMatrix();
-}
-
 void sideOfWall(float size) {
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f); glVertex3f(size, size, 0);
@@ -91,7 +62,8 @@ void drawWall(point3 pos, float size) {
 		glPopMatrix();
 	}
 
-	glDisable(GL_TEXTURE_2D);
+    glColor3ub(255, 255, 255);
+    glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }
 
@@ -109,6 +81,24 @@ void drawEye(point3 pos) {
     gluQuadricTexture(sphere, GL_TRUE);
     gluQuadricNormals(sphere, GLU_SMOOTH);
     gluSphere(sphere, 0.5, 16, 16);
+
+    glDisable(GL_TEXTURE_2D);
+    glPopMatrix();
+}
+
+void drawDoor(point3 origin) {
+    glPushMatrix();
+
+    GLUquadric* sphere = gluNewQuadric();
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 3);
+
+    glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 0);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 0);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, 0);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, 0);
+    glEnd();
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
