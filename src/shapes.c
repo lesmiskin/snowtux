@@ -17,6 +17,21 @@ void sideOfWall(float size) {
 float eyeBobInc = 0;
 float eyePosY = 0;
 
+long lastBlink = 0;
+int blinkInterval = 0;
+int lidCloseTime = 0;
+
+long lastMove = 0;
+int moveInterval = 0;
+float moveSpeed = 0.0f;
+point2 movePos = { 0,0 };
+point2 moveDir = { 0,0 };
+
+long lastPauseTime = 0;
+int flitInc = 0;
+bool shouldPause = false;
+bool isPausing = false;
+
 #define MAX_BLOOD 10
 
 typedef struct {
@@ -147,33 +162,9 @@ void drawWall(point3 pos, float size) {
 	glPopMatrix();
 }
 
-// blinking.
-// red eye (using PNG?)
-// tendrils billboard
-
 int randomMq(int min, int max) {
     return (rand() % (max + 1 - min)) + min;
 }
-
-// eye bobs
-// eye has bloody bg
-// TODO: bloody bg is rippled at edges somehow
-// eye drains blood
-// eye flits around (lerped)
-
-long lastBlink = 0;
-int blinkInterval = 0;
-int lidCloseTime = 0;
-
-long lastMove = 0;
-int moveInterval = 0;
-float moveSpeed = 0.0f;
-point2 movePos = {0,0};
-point2 moveDir = { 0,0 };
-long lastPauseTime = 0;
-int flitInc = 0;
-bool shouldPause = false;
-bool isPausing = false;
 
 void drawEye(point3 pos) {
     eyePosY += sineInc(0.0f, &eyeBobInc, 0.05, 0.005);
