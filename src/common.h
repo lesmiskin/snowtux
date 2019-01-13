@@ -32,5 +32,7 @@ bool isDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
 color makeColor(int r, int g, int b);
 point2 makePoint2(float x, float y);
 point3 makePoint3(float x, float y, float z);
+float sineInc(float offset, float *sineInc, float speed, float magnitude);
+int randomMq(int min, int max);
 
 #endif

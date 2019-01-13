@@ -3,7 +3,5 @@
 
 extern void drawWall(point3 pos, float size);
 extern void drawEye(point3 pos);
-extern void spawnBlood();
-extern void drawBlood();
 
 #endif

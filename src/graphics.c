@@ -45,8 +45,6 @@ void loadTexture(char* name) {
 void loadTextures(void) {
     loadTexture("data/wall.bmp");
     loadTexture("data/eyeball3.png");
-    loadTexture("data/eyeball4.png");
-    loadTexture("data/blood.png");
 }
 
 void initGraphics(void) {
@@ -83,16 +81,6 @@ void processGraphics(void) {
 	glRotatef(360.0f - playerLookY, 0, 1, 0);
     glTranslatef(-playerPosX, 0, -playerPosZ);
 
-
-    if (isDue(lastDrip, 500)) {
-        spawnBlood();
-        lastDrip = clock();
-    }
- 
-    // draw eye
-    drawBlood();
-    drawEye(makePoint3(0.0f, 0.0f, 0.0f));
-
     // draw a 10x10 room, using cubes (WORLD)
     float size = 1.0f;
     for (int i = -5; i < 5; i++) {
@@ -101,6 +89,8 @@ void processGraphics(void) {
         drawWall(makePoint3(-5.0f, 0.0f, (float)i), size);	// left
         drawWall(makePoint3(5.0f, 0.0f, (float)i), size);	// right
     }
+
+    drawEye(makePoint3(0.0f, 0.0f, 0.0f));
 
     SDL_GL_SwapWindow(window);
 }
