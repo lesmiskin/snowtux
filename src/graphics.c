@@ -1,101 +1,204 @@
 #include <SDL.h>
 #include <SDL_Image.h>
-#include <SDL_opengl.h>
-#include <GL/glu.h>
+#include <assert.h>
+#include "assets.h"
 #include "common.h"
-#include "controls.h"
-#include "shapes.h"
+#include "graphics.h"
 
+SDL_Texture *renderBuffer;
 SDL_Renderer *renderer = NULL;
+static int renderScale;
+static const int BASE_SCALE_WIDTH = 320;
+static const int BASE_SCALE_HEIGHT = 240;
+static const double PIXEL_SCALE = 1;				//pixel doubling for assets.
+Coord pixelGrid;					    			//helps aligning things to the tiled background.
+Coord screenBounds;
 
-void initOpenGl(void) {
-    SDL_GLContext mainContext = SDL_GL_CreateContext(window);
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+Coord getTextureSize(SDL_Texture *texture) {
+	int x, y;
+	SDL_QueryTexture(texture, NULL, NULL, &x, &y);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_CULL_FACE);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-
-    glMatrixMode(GL_MODELVIEW);
+	return makeCoord(x, y);
 }
 
-void loadTexture(char* name) {
-    int format = GL_RGB;
-    int tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-//    SDL_Surface* wall = SDL_LoadBMP(name);
-    SDL_Surface* wall = IMG_Load(name);
-    if (wall->format->BytesPerPixel == 4) {
-        format = GL_RGBA;
-    }
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, wall->w, wall->h, 0, format, GL_UNSIGNED_BYTE, wall->pixels);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
+Sprite makeSprite(SDL_Texture *texture, Coord offset, SDL_RendererFlip flip) {
+	Sprite sprite = {
+			texture, offset, getTextureSize(texture), flip
+	};
+	return sprite;
 }
 
-void loadTextures(void) {
-    loadTexture("data/wall.bmp");
-    loadTexture("data/eyeball3.png");
+Sprite makeFlippedSprite(char *textureName, SDL_RendererFlip flip) {
+	SDL_Texture *texture = getTexture(textureName);
+	return makeSprite(texture, zeroCoord(), flip);
+}
+
+Sprite makeSimpleSprite(char *textureName) {
+	SDL_Texture *texture = getTexture(textureName);
+	return makeSprite(texture, zeroCoord(), SDL_FLIP_NONE);
+}
+
+void drawSpriteFull(Sprite sprite, Coord origin, double scalex, double scaley, double angle, bool centered) {
+	//Ensure we're always calling this with an initialised sprite_t.
+	assert(sprite.texture != NULL);
+
+	//Offsets should be relative to image pixel metrics, not screen metrics.
+	int offsetX = 0;
+	int offsetY = 0;
+	// int offsetX = sprite.offset.x;
+	// int offsetY = sprite.offset.y;
+
+	//NB: We adjust the offset to ensure all sprites are drawn centered at their coord points
+	if (centered) {
+		offsetX -= ((sprite.size.x*scalex) / 2);
+		offsetY -= ((sprite.size.y*scaley) / 2);
+	}
+
+	//Configure target location output sprite_t size, adjusting the latter for the constant sprite_t scaling factor.
+	SDL_Rect destination = {
+		(origin.x + offsetX),
+		(origin.y + offsetY),
+		sprite.size.x * scalex,
+		sprite.size.y * scaley
+	};
+
+	//Rotation
+	SDL_Point rotateOrigin = { 0, 0 };
+	if (angle > 0) {
+		rotateOrigin.x = ((int)sprite.size.x*scaley) / 2;
+		rotateOrigin.y = ((int)sprite.size.y*scaley) / 2;
+	};
+
+	SDL_RenderCopyEx(renderer, sprite.texture, NULL, &destination, angle, &rotateOrigin, sprite.flip);
+}
+
+void drawSprite(Sprite sprite, Coord origin) {
+	drawSpriteFull(sprite, origin, 1, 1, 0, true);
+}
+
+void drawSimpleSprite(char *textureName, Coord origin) {
+	drawSprite(makeSimpleSprite(textureName), origin);
+}
+
+void drawSimpleSpriteFlipped(char *textureName, Coord origin, SDL_RendererFlip flip) {
+	drawSprite(makeSprite(textureName, zeroCoord(), flip), origin);
+}
+
+void drawSimpleTile(char *textureName, Coord origin) {
+	drawSpriteFull(makeSimpleSprite(textureName), origin, 1, 1, 0, false);
 }
 
 void initGraphics(void) {
-    renderer = SDL_CreateRenderer(
-        window,
-        -1,							   // insert at default index position for renderer list.
-        SDL_RENDERER_ACCELERATED
-    );
-    initOpenGl();
-    loadTextures();
-}
+	//Init SDL renderer
+	renderer = SDL_CreateRenderer(
+		window,
+		-1,							            //insert at default index position for renderer list.
+		SDL_RENDERER_TARGETTEXTURE          	//supports rendering to textures.
+	);
 
-void drawCeilingAndFloor() {
-	// clear whole screen for ceiling
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);		// dark grey
-	glClear(GL_COLOR_BUFFER_BIT);
+	//TODO: We need some prose to describe the concepts at play here. Currently very confusing.
 
-	// clear lower part for floor
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);		// mid grey
-	glScissor(0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
-	glEnable(GL_SCISSOR_TEST);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_SCISSOR_TEST);
-}
+	//Set virtual screen size and pixel doubling ratio.
+	screenBounds = makeCoord(BASE_SCALE_WIDTH, BASE_SCALE_HEIGHT);		//virtual screen size
+	renderScale = PIXEL_SCALE;											//pixel doubling
 
-long lastDrip;
+	//Pixel grid is the blocky rendering grid we use to help tile things (i.e. backgrounds).
+	pixelGrid = makeCoord(
+		BASE_SCALE_WIDTH / renderScale,
+		BASE_SCALE_HEIGHT / renderScale
+	);
 
-void processGraphics(void) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-	drawCeilingAndFloor();
+	//IMPORTANT: Make a texture which we render all contents to, then efficiently scale just this one
+	// texture upon rendering. This creates a *massive* speedup. Thanks to: https://forums.libsdl.org/viewtopic.php?t=10567
+	renderBuffer = SDL_CreateTexture(
+		renderer,
+		SDL_PIXELFORMAT_RGB24,
+		SDL_TEXTUREACCESS_TARGET,
+		(int)pixelGrid.x,
+		(int)pixelGrid.y
+	);
 
-    // adjust camera for player position
-	glRotatef(360.0f - playerLookY, 0, 1, 0);
-    glTranslatef(-playerPosX, 0, -playerPosZ);
+	//Rachaie's background.
+	SDL_RenderClear(renderer);
 
-    // draw a 10x10 room, using cubes (WORLD)
-    float size = 1.0f;
-    for (int i = -5; i < 5; i++) {
-        drawWall(makePoint3((float)i, 0.0f, -5.0f), size);	// front
-        drawWall(makePoint3((float)i, 0.0f, 5.0f), size);	// back
-        drawWall(makePoint3(-5.0f, 0.0f, (float)i), size);	// left
-        drawWall(makePoint3(5.0f, 0.0f, (float)i), size);	// right
-    }
-
-    drawEye(makePoint3(0.0f, 0.0f, 0.0f));
-
-    SDL_GL_SwapWindow(window);
+	SDL_SetRenderTarget(renderer, renderBuffer);
+	assert(renderer != NULL);
 }
 
 void shutdownGraphics(void) {
+	if (renderer == NULL) return;			//OK to call if not yet setup (thanks, encapsulation)
+
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL;
+}
+
+void processGraphics(void) {
+	//Change rendering target to window.
+	SDL_SetRenderTarget(renderer, NULL);
+
+	//Activate scaler, and blit the buffer to the screen.
+	SDL_RenderSetLogicalSize(renderer, pixelGrid.x, pixelGrid.y);
+	SDL_RenderCopy(renderer, renderBuffer, NULL, NULL);
+
+	//Actually update the screen itself.
+	SDL_RenderPresent(renderer);
+
+	//Reset render target back to texture buffer
+	SDL_SetRenderTarget(renderer, renderBuffer);
+
+	// clear the next frame.
+	SDL_RenderClear(renderer);
+}
+
+Colour makeColour(int red, int green, int blue, int alpha) {
+	Colour colour = { red, green, blue, alpha };
+	return colour;
+}
+
+int getPixel(SDL_Surface *surface, int x, int y) {
+	int *pixels = (int *)surface->pixels;
+	return pixels[(y * surface->w) + x];
+}
+
+void setPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
+	int *pixels = (int *)surface->pixels;
+	pixels[(y * surface->w) + x] = pixel;
+}
+
+//Note: We offer an additive blend mode, which is different from the multiplicative approach offered by
+//SDL's colour modulate. Also, we operate on a surface, rather than a texture.
+void *colouriseSprite(SDL_Surface *original, Colour colour, ColourisationMethod method) {
+	//Set all opaque pixels as per colour argument.
+	for (int x = 0; x < original->w; x++) {
+		for (int y = 0; y < original->h; y++) {
+			//Obtain alpha channel from pixel
+			int pixel = getPixel(original, x, y);
+			Uint8 oAlpha, or , og, ob;
+			SDL_GetRGBA(pixel, original->format, &or , &og, &ob, &oAlpha);
+
+			//Don't colourise fully-transparent pixels.
+			if (oAlpha == 0) continue;
+
+			Colour final;
+
+			//Set colour to what's supplied without any modulation.
+			if (method == COLOURISE_ABSOLUTE) {
+				final = colour;
+				final.alpha = colour.alpha;
+				//Increase each colour channel value by that of the input colour, and cancel out any channel
+				// that is not in the input - ensuring a complete colourisation every time.
+			}
+			else {
+				final.red = colour.red > 0 ? or +colour.red > 255 ? 255 : or +colour.red : 0;
+				final.green = colour.green > 0 ? og + colour.green > 255 ? 255 : og + colour.green : 0;
+				final.blue = colour.blue > 0 ? ob + colour.blue > 255 ? 255 : ob + colour.blue : 0;
+				final.alpha = colour.alpha;
+			}
+
+			setPixel(original, x, y, SDL_MapRGBA(
+				original->format,
+				final.red, final.green, final.blue, final.alpha)
+			);
+		}
+	}
 }

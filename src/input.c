@@ -1,5 +1,5 @@
-#include "controls.h"
 #include "common.h"
+#include "characters.h"
 
 void checkForInputAndEvents(void) {
 	resetControls();
@@ -23,6 +23,9 @@ void checkForInputAndEvents(void) {
 				if (keypress == SDL_SCANCODE_ESCAPE) {
 					stopGame = true;
 				}
+				if (keypress == SDL_SCANCODE_SPACE) {
+					jumpTry = true;
+				}
 			}
 		}
 	}
@@ -30,13 +33,8 @@ void checkForInputAndEvents(void) {
 	// held keys
 	const Uint8 *heldKeys = SDL_GetKeyboardState(NULL);
 	if (heldKeys[SDL_SCANCODE_LEFT]) {
-		turningLeft = true;
+		movingRight = true;
 	} else if (heldKeys[SDL_SCANCODE_RIGHT]) {
-		turningRight = true;
-	}
-	if (heldKeys[SDL_SCANCODE_UP]) {
-		movingForward = true;
-	} else if (heldKeys[SDL_SCANCODE_DOWN]) {
-		movingBack = true;
+		movingLeft = true;
 	}
 }

@@ -11,6 +11,10 @@ extern bool stopGame;
 extern SDL_Window *window;
 
 typedef struct {
+	double x, y;
+} Coord;
+
+typedef struct {
     float x; 
     float y;
 } point2;
@@ -34,5 +38,10 @@ point2 makePoint2(float x, float y);
 point3 makePoint3(float x, float y, float z);
 float sineInc(float offset, float *sineInc, float speed, float magnitude);
 int randomMq(int min, int max);
+void fatalError(const char *title, const char *message);
+char *combineStrings(const char *a, const char *b);
+bool fileExists(const char *path);
+extern Coord makeCoord(double x, double y);
+extern Coord zeroCoord();
 
 #endif

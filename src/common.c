@@ -1,11 +1,23 @@
 #include "common.h"
 #include <time.h>
+#include "stdlib.h"
+#include <stdio.h>
+#include <string.h>
 
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
+const int WINDOW_WIDTH = 1024;
+const int WINDOW_HEIGHT = 768;
 SDL_Window *window = NULL;
 bool stopGame = false;
 float RADIAN_CIRCLE = 3.141592 * 2;
+
+Coord zeroCoord() {
+	return makeCoord(0, 0);
+}
+
+Coord makeCoord(double x, double y) {
+	Coord coord = { x, y };
+	return coord;
+}
 
 long getTime(void) {
 	return clock() / (CLOCKS_PER_SEC / 1000);		// convert ticks to milliseconds
@@ -39,4 +51,29 @@ float sineInc(float offset, float *sineInc, float speed, float magnitude) {
 
 int randomMq(int min, int max) {
     return (rand() % (max + 1 - min)) + min;
+}
+
+void fatalError(const char *title, const char *message) {
+	SDL_ShowSimpleMessageBox(
+		SDL_MESSAGEBOX_ERROR,
+		title,
+		message,
+		window
+	);
+	SDL_Quit();
+}
+
+char *combineStrings(const char *a, const char *b) {
+	//Allocate exact amount of space necessary to hold the two strings.
+	char *result = malloc(strlen(a) + strlen(b) + 1);		//+1 for the zero-terminator
+#pragma warning(disable: 4996)
+	strcpy(result, a);
+	strcat(result, b);
+#pragma warning(default: 4996)
+
+	return result;
+}
+
+bool fileExists(const char *path) {
+	return fopen(path, "r");
 }

@@ -27,10 +27,13 @@
     <ClCompile Include="src/graphics.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\controls.c">
+    <ClCompile Include="src\assets.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\shapes.c">
+    <ClCompile Include="src\characters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\level.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,16 +47,17 @@
     <ClInclude Include="src/graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\controls.h">
+    <ClInclude Include="src\assets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\shapes.h">
+    <ClInclude Include="src\characters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
-    <None Include="UNLICENSE" />
     <None Include=".gitignore" />
   </ItemGroup>
 </Project>
