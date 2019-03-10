@@ -1,6 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "assets.h"
 #include "graphics.h"
 #include "level.h"
+#include <stdio.h>
 #include <stdbool.h>
 #include <SDL.h>
 #include <time.h>
@@ -19,15 +22,15 @@ float playerY = 50;
 bool onGround = false;
 
 // Jumping
-const float JUMP_SPEED = 2.0f;
-const float JUMP_SLOW = 0.04f;
+const float JUMP_SPEED = 3.5f;
+const float JUMP_SLOW = 0.1f;
 bool jumpTry = false;
 bool isJumping = false;
 long lastJump = 0;
 float jumpInc = 0;
 
 // Physics
-float GRAVITY = 0.75f;
+float GRAVITY = 1.5f;
 const int FLOOR = 100;
 
 // Animation
@@ -53,15 +56,16 @@ void resetControls(void) {
 	jumpTry = false;
 }
 
-void checkGround() {
-	onGround = ((playerY + BOUND / 2) + GRAVITY >= FLOOR);
+bool checkGround(Coord c) {
+	return checkPlat(makeCoord(c.x, c.y + 5 + GRAVITY));
+//	onGround = ((playerY + BOUND / 2) + GRAVITY >= FLOOR);
 }
 
 void applyControlsToPlayer(void) {
-	if (movingRight) {
+	if (movingRight && !checkWall(makeCoord(playerX - 5 - 1.0f, playerY))) {
 		playerX -= 1.0f;
 	}
-	else if (movingLeft) {
+	else if (movingLeft && !checkWall(makeCoord(playerX + 5 + 1.0f, playerY))) {
 		playerX += 1.0f;
 	}
 
@@ -84,8 +88,49 @@ void applyControlsToPlayer(void) {
 	}
 }
 
+#define MAX_ENEMIES 5
+
+typedef struct {
+	bool valid;
+	Coord pos;
+} Enemy;
+
+Enemy enemies[MAX_ENEMIES];
+
+int enemyAnimInc = 0;
+long lastEnemyAnimTime = 0;
+int ENEMY_FRAMES = 2;
+
+void enemyFrame() {
+	// animate
+	if (timer(&lastEnemyAnimTime, 250)) {
+		enemyAnimInc = enemyAnimInc == ENEMY_FRAMES - 1 ? 0 : enemyAnimInc + 1;
+	}
+	char file[13];
+
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		if(!enemies[i].valid) continue;
+
+		sprintf(file, "squid-0%d.png", enemyAnimInc+1);
+		drawSimpleSprite(file, enemies[i].pos);
+
+		if (!checkGround(enemies[i].pos)) {
+			enemies[i].pos.y += GRAVITY/2;
+		}
+	}
+
+	// todo: gravity
+	// todo: player seek
+	// todo: multiple
+	// todo: facing dir
+	// todo: spawn at map definition
+	// todo: jump if above, within threshold (must be above another level)
+	// todo: player spawn
+}
+
 void charFrame() {
-	checkGround();
+	enemyFrame();
+	onGround = checkGround(makeCoord(playerX, playerY));
 
 	// Animation / flipping
 	if (isWalking()) {
@@ -130,8 +175,16 @@ void charFrame() {
 	if (!onGround) {
 		playerY += GRAVITY;
 	}
-	//int bottomBound = playerY + BOUND/2;
-	//if (bottomBound + GRAVITY >= FLOOR) {
-	//	playerY = FLOOR - BOUND/2;
-	//}
+}
+
+void spawnChar(Coord c) {
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		if(enemies[i].valid) continue;
+		enemies[i].valid = true;
+		enemies[i].pos = c;
+		break;
+	}
+}
+
+void initCharacters() {
 }

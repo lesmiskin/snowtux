@@ -3,6 +3,7 @@
 
 extern void charFrame();
 
+#include "common.h"
 #include <stdbool.h>
 #include <SDL_opengl.h>
 
@@ -13,7 +14,9 @@ extern bool movingRight;
 extern bool movingLeft;
 extern bool jumpTry;
 
-extern void resetControls(void);
-extern void applyControlsToPlayer(void);
+void spawnChar(Coord c);
+void resetControls(void);
+void applyControlsToPlayer(void);
+void initCharacters();
 
 #endif

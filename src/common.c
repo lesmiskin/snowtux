@@ -27,6 +27,17 @@ bool isDue(long timeOfLastOperation, float timeUntilNextOperation) {
 	return (getTime() - timeOfLastOperation) >= timeUntilNextOperation;
 }
 
+bool timer(long *lastTime, double hertz) {
+	long now = clock();
+	if (isDue(*lastTime, hertz)) {
+		*lastTime = now;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 color makeColor(int r, int g, int b) {
     color c = { r, g, b };
     return c;

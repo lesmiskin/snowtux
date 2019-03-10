@@ -39,6 +39,8 @@ int main(int argc, char *argv[]) {
 	startSdl();
 
 	initAssets();
+	loadLevel();
+	initCharacters();
 
 	long timeOfLastFrame_ms = 0;
     float timeUntilNextFrame_ms = (float)1000 / (float)FRAMES_PER_SECOND;

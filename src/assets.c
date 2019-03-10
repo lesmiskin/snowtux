@@ -89,14 +89,35 @@ static void loadImages(void) {
 	//Define assets to be loaded.
 	AssetDef definitions[] = {
 
+		{ "squid-01.png", false },
+		{ "squid-02.png", false },
+
+		{ "bug-01.png", false },
+		{ "bug-02.png", false },
+		{ "bug-03.png", false },
+		{ "bug-04.png", false },
+		{ "bug-05.png", false },
+		{ "bug-06.png", false },
+
+		{ "virus-01.png", false },
+		{ "virus-02.png", false },
+		{ "virus-03.png", false },
+		{ "virus-04.png", false },
+		{ "virus-05.png", false },
+		{ "virus-06.png", false },
+
 		{ "tux1-01.png", false },
 		{ "tux1-02.png", false },
 		{ "tux1-03.png", false },
 		{ "tux1-jump.png", false },
 		{ "tux1-jump2.png", false },
 
+		{ "bg2.png", false },
+		{ "tile-00.png", false },
 		{ "tile-01.png", false },
-
+		{ "tile-00b.png", false },
+		{ "tile-01b.png", false },
+		{ "tile-00c.png", false },
 	};
 
 	//Infer asset path from current directory.

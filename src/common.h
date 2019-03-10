@@ -33,6 +33,7 @@ typedef struct {
 
 long getTime(void);
 bool isDue(long timeOfLastOperation_ms, float timeUntilNextOperation_ms);
+bool timer(long *lastTime, double hertz);
 color makeColor(int r, int g, int b);
 point2 makePoint2(float x, float y);
 point3 makePoint3(float x, float y, float z);
